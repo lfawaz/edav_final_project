@@ -1,0 +1,39 @@
+STATECOU
+PST045213
+POP010210
+AGE135213
+AGE295213
+AGE775213
+SEX255213
+RHI125213
+RHI225213
+RHI325213
+RHI425213
+RHI525213
+RHI625213
+RHI725213
+RHI825213
+EDU635213
+EDU685213
+PVY020213
+BZA110212
+POP060210
+
+
+
+Calculation
+AGE295213 Persons under 18 years, percent, 2013                                                   PCT    1         23.3      0.0      42.2 CENSUS
+AGE775213 Persons 65 years and over, percent, 2013                                                PCT    1         14.1      3.8      51.6 CENSUS
+
+18-64 yr olds: 1 - (AGE295213 + AGE775213)
+
+
+EDU635213 High school graduate or higher, percent of persons age 25+, 2009-2013                   PCT    1         86.0     45.0      99.0 CENSUS
+EDU685213 Bachelor's degree or higher, percent of persons age 25+, 2009-2013                      PCT    1         28.8      3.2      74.4 CENSUS
+
+High School grad only: EDU635213 - EDU685213
+Less than high school: 1 - (EDU635213)
+
+Private non-farm employment %age: BZA110212/PST045213
+
+
