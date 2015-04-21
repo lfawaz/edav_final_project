@@ -1,0 +1,93 @@
+<!doctype html>
+
+<html>
+
+<meta charset="utf-8">
+<style>
+
+.axis text {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+</style>
+
+<head>
+	<title> Homicide Rate Coefficients </title>
+	<p><font face="verdana" size="5">Homicide Rate Coefficients</font></p>
+	<script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+
+<body> 
+	<script>
+
+		var H_ws = [0.8371, -6.6794, 0.8666, 15.1295, 0.3747, -7.621, -0.0304, 2.409, -0.3871, 1.7111, 0.4001, 26.2701, 0.261, 12.8704, 0.0298, -0.2595, 2.2237,15.6697];
+
+		var labels = ["Gun Strictness", "Urban Share", "Pop < 18", "Female Share", "Caucasian Share", "< High School Ed", "Below Poverty Share", "Unemployment", "Pop per Sq Mile"];
+
+		var margin = {top: 40, right: 10, bottom: 10, left: 10},
+			width = 1300 - margin.left - margin.right,
+			height = 700 - margin.top - margin.bottom;
+
+		var x = d3.scale.linear()
+			.domain(d3.extent(H_ws))
+			.range([0, width])
+			.nice();
+
+		var y = d3.scale.ordinal()
+			.domain(d3.range(H_ws.length))
+			.rangeRoundBands([0, height], .2);
+
+		var xAxis = d3.svg.axis()
+			.scale(x)
+			.orient("top");
+
+		var svg = d3.select("body").append("svg")
+			.attr("width", width + margin.left + margin.right)
+			.attr("height", height + margin.top + margin.bottom)
+		  .append("g")
+			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+		svg.selectAll("rect")
+			.data(H_ws)
+		  .enter()
+			.append("rect")
+			.attr("x", function(d, i) { return x(Math.min(0, d)); })
+			.attr("y", function(d, i) { return i %2 > 0 ? y(i)-7 : y(i); })
+			.attr("fill", function(d, i) { return i %2 > 0 ? "grey" : "green"; })
+			.text(function(d) { return d; })
+			.attr("width", function(d, i) { return Math.abs(x(d) - x(0)); })
+			.attr("height", y.rangeBand());
+
+		svg.selectAll("text")
+			.data(labels)
+		  .enter().append("svg:text")
+			.attr("x", function(d) { return x(d) > 0 ? x(d) : x(d) - 5; })
+			.attr("y", function(d, i) { return 2*y(i); })
+			.attr("dx", function(d) { return x(d) < 0 ? 3 : -3; }) // padding-right
+			.attr("dy", ".35em") // vertical-align: middle
+			.attr("text-anchor", function(d) { return x(d) > 0 ? "left" : "right"; }) // text-align: right
+			.text(String);
+
+		svg.append("g")
+			.attr("class", "x axis")
+			.call(xAxis);
+
+		svg.append("g")
+			.attr("class", "y axis")
+		  .append("line")
+			.attr("x1", x(0))
+			.attr("x2", x(0))
+			.attr("y2", height);
+
+
+	</script>
+
+</body>
